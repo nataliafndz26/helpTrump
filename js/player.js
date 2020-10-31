@@ -1,11 +1,11 @@
 class Player {
-    constructor(ctx) {
+    constructor(ctx, canvasSize, keys) {
 
         this.ctx = ctx;
 
         this.canvasSize = {
-            w: 500,
-            h: 700
+            w: canvasSize.w,
+            h: canvasSize.h
         }
             
         this.playerSize = {
@@ -15,34 +15,75 @@ class Player {
         
         this.playerPosition = {
             x: 0,
-            y: 0 //this.canvasSize.h - this.playerSize.h - 20
+            y: this.canvasSize.h - this.playerSize.h - 50
         }
 
         this.defaultPosition = this.playerPosition.y
 
         this.controlYaxis = {
             speed: 1,
-            gravity: 0.8
+            gravity: 0.4
         }
+
+        // this.imageName = trumpImage
 
         this.imageInstance = undefined
         
-        //this.keys = keys
+        this.keys = keys
 
-       //this.setListeners()
+        this.setEventListeners()
         
         this.init()
     }
 
     init() {
         this.imageInstance = new Image()
-        this.imageInstance.src = `img/trump.png`;
+        this.imageInstance.src = 'img/trump.png';
+        this.drawTrump()
+        
     }
 
     drawTrump() {
 
-        this.imageInstance.onload = () => {
             this.ctx.drawImage(this.imageInstance, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
-        }
+
+            this.moveTrump()
     }
+
+    moveTrump() {
+
+        if (this.playerPosition.y < this.defaultPosition) {
+            this.playerPosition.y += this.controlYaxis.speed;
+            this.controlYaxis.speed += this.controlYaxis.gravity;
+        } else {
+            this.playerPosition.y = this.defaultPosition;
+            this.controlYaxis.speed = 1;
+
+        }
+
+    }
+
+    setEventListeners() {
+        document.addEventListener("keydown", e => {
+       
+            if (e.key === this.keys) {
+
+                 if (this.playerPosition.y >= this.defaultPosition) {
+                   this.jumpTrump()
+                     console.log("hhh")   
+                     console.log(this.playerPosition.y)
+                    
+                }
+                
+            }
+
+        })
+    }
+
+    jumpTrump() {
+        this.playerPosition.y -= 30;
+        this.controlYaxis.speed -= 8
+   
+    }
+
 }

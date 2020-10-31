@@ -17,15 +17,15 @@ const Game = {
     player: undefined,
     background: undefined,
     obstacles: [],
-    keys: undefined,
+    keys:" ", 
 
 
     init(id) {
         this.canvasTag = document.getElementById(id)
         this.ctx = this.canvasTag.getContext('2d')
         this.setDimensions()
-        this.createTrump()
-        this.player.drawTrump()
+        this.start ()
+
     },
 
     setDimensions() {
@@ -35,49 +35,40 @@ const Game = {
         this.canvasTag.setAttribute('height', this.canvasSize.h)
     }, 
 
-    createTrump() {
-        this.player = new Player (this.ctx)
+    start() {
+        
+        this.reset()
+        
+        this.interval = setInterval(() => {
+            
+            this.clear()
+            this.drawAll()
+            
+        }, 18)
+    },
+
+    reset() {
+        this.background = new Background(this.ctx, this.canvasSize, 'img/bg.png')
+        this.player = new Player(this.ctx, this.canvasSize, this.keys)
+    
+    },
+
+    drawAll() {
+        this.background.draw()
+        this.player.drawTrump()
+    },
+
+    clear() {
+        this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h);
     }
+
+    // createTrump() {
+    //     this.player = new Player(this.ctx, this.canvasSize, this.keys)
+    // },
+
+    // createBackGround() {
+    //     this.background = new Background (this.ctx, this.canvasSize, 'img/bg.png')
+    // }
 
 }
 
-// class Player {
-
-//     constructor(ctx, carPosX, carPosY, carW, carH, carImage) {
-
-//         this.ctx = ctx
-
-
-//         this.playerPosition = {
-//             x: carPosX,
-//             y: carPosY //this.canvasSize.h - this.playerSize.h - 20
-//         }
-
-//         this.playerSize = {
-//             w: carW,
-//             h: carH
-//         }
-
-//         this.imageName = carImage
-//         this.imageInstance = undefined
-
-//         this.init()
-//     }
-
-//     init() {
-
-//         this.imageInstance = new Image()
-//         this.imageInstance.src = `img/${this.imageName}`
-
-//     }
-
-//     draw() {
-
-//         this.imageInstance.onload = () => {
-//             this.ctx.drawImage(this.imageInstance, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
-//         }
-
-        
-
-//     }
-//}
