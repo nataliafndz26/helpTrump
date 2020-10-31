@@ -43,6 +43,9 @@ const Game = {
             
             this.clear()
             this.drawAll()
+
+            this.generateObs()
+            this.clearObs()
             
         }, 18)
     },
@@ -50,25 +53,27 @@ const Game = {
     reset() {
         this.background = new Background(this.ctx, this.canvasSize, 'img/bg.png')
         this.player = new Player(this.ctx, this.canvasSize, this.keys)
+        this.obstacles = []
     
     },
 
     drawAll() {
         this.background.draw()
         this.player.drawTrump()
+        this.obstacles.forEach (elm => elm.drawObs())
     },
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h);
+    },
+
+    generateObs() {
+        this.obstacles.push (new Obstacle (this.ctx, this.canvasSize, this.player.defaultPosition, this.player.playerSize))
+    },
+
+    clearObs() {
+        this.obstacles = this.obstacles.filter(elm => elm.obsPosition.x >= 0)
     }
-
-    // createTrump() {
-    //     this.player = new Player(this.ctx, this.canvasSize, this.keys)
-    // },
-
-    // createBackGround() {
-    //     this.background = new Background (this.ctx, this.canvasSize, 'img/bg.png')
-    // }
 
 }
 

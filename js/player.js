@@ -25,7 +25,6 @@ class Player {
             gravity: 0.4
         }
 
-        // this.imageName = trumpImage
 
         this.imageInstance = undefined
         
