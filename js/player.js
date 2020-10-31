@@ -24,24 +24,25 @@ class Player {
             speed: 1,
             gravity: 0.8
         }
+
+        this.imageInstance = undefined
         
         //this.keys = keys
 
-       // this.setListeners()
+       //this.setListeners()
         
         this.init()
     }
 
     init() {
-        this.image = new Image()
-        this.image.src = 'img/car.png';
-
-        //console.log ("j")
+        this.imageInstance = new Image()
+        this.imageInstance.src = `img/trump.png`;
     }
 
     drawTrump() {
 
-        this.ctx.drawImage(this.image, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
-
+        this.imageInstance.onload = () => {
+            this.ctx.drawImage(this.imageInstance, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
+        }
     }
 }

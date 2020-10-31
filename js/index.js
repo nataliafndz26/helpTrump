@@ -1,1 +1,1 @@
-Game.init('myCanvas')
+Game.init("myCanvas")
