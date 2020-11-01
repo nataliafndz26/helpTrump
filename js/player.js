@@ -14,7 +14,7 @@ class Player {
         }
 
         this.playerPosition = {
-            x: 0,
+            x: 200,
             y: this.canvasSize.h - this.playerSize.h - 50
         }
 
@@ -80,7 +80,7 @@ class Player {
     }
 
     jumpTrump() {
-        this.playerPosition.y -= 30;
+        this.playerPosition.y -= 200;
         this.controlYaxis.speed -= 8
 
     }

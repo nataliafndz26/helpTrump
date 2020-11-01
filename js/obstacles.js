@@ -2,6 +2,7 @@ class Obstacle {
     constructor(ctx, canvasSize, defaultPosition, playerSize) {
 
         this.ctx = ctx
+
         this.obsSize = {
             w: 30,
             h: 50
@@ -19,6 +20,7 @@ class Obstacle {
     }
 
     init() {
+        
         this.imageInstance = new Image()
         this.imageInstance.src = 'img/china.png';
         this.drawObs()

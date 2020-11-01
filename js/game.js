@@ -17,6 +17,7 @@ const Game = {
     player: undefined,
     background: undefined,
     obstacles: [],
+    platforms: [],
     keys: " ",
 
 
@@ -47,6 +48,7 @@ const Game = {
             this.generateObs()
             this.clearObs()
 
+
             if (this.frames.framesCounter > 5000) {
 
                 this.frames.framesCounter = 0
@@ -54,13 +56,17 @@ const Game = {
             } else {
 
                 this.frames.framesCounter++
-                console.log(this.frames.framesCounter)
 
             }
 
             if (this.collisionDetection()) {
                 console.log('ha chocado')
             }
+
+            this.platformDetection()
+
+            this.generatePlat()
+            this.clearPlat()
 
         }, 1000 / this.frames.fps)
     },
@@ -69,6 +75,7 @@ const Game = {
         this.background = new Background(this.ctx, this.canvasSize, 'img/bg.png')
         this.player = new Player(this.ctx, this.canvasSize, this.keys)
         this.obstacles = []
+        this.platforms = []
 
     },
 
@@ -76,6 +83,7 @@ const Game = {
         this.background.draw()
         this.player.drawTrump()
         this.obstacles.forEach(elm => elm.drawObs())
+        this.platforms.forEach(elm => elm.draw())
 
     },
 
@@ -92,6 +100,15 @@ const Game = {
         }
     },
 
+    generatePlat() {
+
+        if (this.frames.framesCounter % 100 === 0) {
+
+            this.platforms.push(new Platform(this.ctx, this.canvasSize, this.player.playerSize))
+
+        }
+    },
+
     collisionDetection() {
 
         return this.obstacles.some(elm => {
@@ -101,17 +118,35 @@ const Game = {
                 this.player.playerPosition.y < elm.obsPosition.y + elm.obsSize.h &&
                 this.player.playerSize.h + this.player.playerPosition.y > elm.obsPosition.y)
 
+        })
+    },
 
-            // return (this.player.playerPosition.x < elm.obsPosition.x + elm.obsSize.w &&
-            //     this.player.playerPosition.x + this.player.playerSize.w > elm.obsPosition.x &&
-            //     this.player.playerPosition.y < elm.obsPosition.y + elm.obsSize.h &&
-            //     this.player.playerSize.h  + this.player.playerPosition.y > elm.obsPosition.y) 
+    platformDetection() {
 
+        this.platforms.forEach(elm => {
+
+           
+            if (this.player.playerPosition.x < elm.platPosition.x + elm.platSize.w &&
+                this.player.playerPosition.x + this.player.playerSize.w > elm.platPosition.x &&
+                this.player.playerPosition.y < elm.platPosition.y + elm.platSize.h &&
+                this.player.playerPosition.y + this.player.playerSize.h > elm.platPosition.y) {
+
+                
+
+                this.player.playerPosition.y = elm.platPosition.y - this.player.playerSize.h
+                //this.player.controlYaxis.speed *= -1
+                //alert ('yay')
+                //}
+            }
         })
     },
 
     clearObs() {
         this.obstacles = this.obstacles.filter(elm => elm.obsPosition.x >= 0)
+    },
+
+    clearPlat() {
+        this.platforms = this.platforms.filter(elm => elm.platPosition.x >= 0)
     }
 
 }
