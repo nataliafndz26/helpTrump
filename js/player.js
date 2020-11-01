@@ -7,12 +7,12 @@ class Player {
             w: canvasSize.w,
             h: canvasSize.h
         }
-            
+
         this.playerSize = {
             w: 100,
             h: 100
         }
-        
+
         this.playerPosition = {
             x: 0,
             y: this.canvasSize.h - this.playerSize.h - 50
@@ -27,11 +27,11 @@ class Player {
 
 
         this.imageInstance = undefined
-        
+
         this.keys = keys
 
         this.setEventListeners()
-        
+
         this.init()
     }
 
@@ -39,14 +39,14 @@ class Player {
         this.imageInstance = new Image()
         this.imageInstance.src = 'img/trump.png';
         this.drawTrump()
-        
+
     }
 
     drawTrump() {
 
-            this.ctx.drawImage(this.imageInstance, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
+        this.ctx.drawImage(this.imageInstance, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
 
-            this.moveTrump()
+        this.moveTrump()
     }
 
     moveTrump() {
@@ -64,16 +64,16 @@ class Player {
 
     setEventListeners() {
         document.addEventListener("keydown", e => {
-       
+
             if (e.key === this.keys) {
 
-                 if (this.playerPosition.y >= this.defaultPosition) {
-                   this.jumpTrump()
-                     console.log("hhh")   
-                     console.log(this.playerPosition.y)
-                    
+                if (this.playerPosition.y >= this.defaultPosition) {
+                    this.jumpTrump()
+                    console.log("hhh")
+                    console.log(this.playerPosition.y)
+
                 }
-                
+
             }
 
         })
@@ -82,7 +82,7 @@ class Player {
     jumpTrump() {
         this.playerPosition.y -= 30;
         this.controlYaxis.speed -= 8
-   
+
     }
 
 }
