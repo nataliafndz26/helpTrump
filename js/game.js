@@ -102,9 +102,26 @@ const Game = {
 
     generatePlat() {
 
-        if (this.frames.framesCounter % 100 === 0) {
+        if (this.frames.framesCounter % 450 === 0) {
+            
+            const platform1 = new Platform(this.ctx, this.canvasSize, 200, 150, 12, "red", 1)
 
-            this.platforms.push(new Platform(this.ctx, this.canvasSize, this.player.playerSize))
+            this.platforms.push (platform1)
+            
+        }
+        if (this.frames.framesCounter % 425 === 0) {
+
+            const platform2 = new Platform(this.ctx, this.canvasSize, 330, 180, 15, "green", 1)
+            
+            this.platforms.push (platform2)
+
+        }
+
+        if (this.frames.framesCounter % 400 === 0) {
+
+           const platform3 = new Platform(this.ctx, this.canvasSize, 460, 120, 12, "yellow", 1)
+            
+            this.platforms.push (platform3)
 
         }
     },
@@ -134,7 +151,7 @@ const Game = {
                 
 
                 this.player.playerPosition.y = elm.platPosition.y - this.player.playerSize.h
-                //this.player.controlYaxis.speed *= -1
+                this.player.controlYaxis.gravity = 0.2
                 //alert ('yay')
                 //}
             }

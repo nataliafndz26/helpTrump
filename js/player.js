@@ -9,8 +9,8 @@ class Player {
         }
 
         this.playerSize = {
-            w: 100,
-            h: 100
+            w: 50,
+            h: 50
         }
 
         this.playerPosition = {
@@ -65,14 +65,15 @@ class Player {
     setEventListeners() {
         document.addEventListener("keydown", e => {
 
+
             if (e.key === this.keys) {
 
-                if (this.playerPosition.y >= this.defaultPosition) {
+                //if (this.playerPosition.y >= this.defaultPosition) {
                     this.jumpTrump()
-                    console.log("hhh")
+                    
                     console.log(this.playerPosition.y)
 
-                }
+               //}
 
             }
 
@@ -80,7 +81,7 @@ class Player {
     }
 
     jumpTrump() {
-        this.playerPosition.y -= 200;
+        this.playerPosition.y -= 80;
         this.controlYaxis.speed -= 8
 
     }

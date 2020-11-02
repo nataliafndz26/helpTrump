@@ -1,29 +1,21 @@
 class Platform {
-    constructor(ctx, canvasSize, playerSize) {
+    constructor(ctx, canvasSize, diference, platSizeW, platSizeH, color, speed) {
 
         this.ctx = ctx
 
-        // this.playerPosition = {
-        //     x: playerPosition.x,
-        //     y: playerPosition.y
-        // }
-
-        // this.playerSize = {
-        //     w: playerSize.w,
-        //     h: playerSize.h
-        // }
-
         this.platPosition = {
             x: canvasSize.w,
-            y: canvasSize.h - playerSize.h -200
+            y: canvasSize.h - diference
         }
 
         this.platSize = {
-            w: 200,
-            h: 30
+            w: platSizeW,
+            h: platSizeH
         }
 
-        this.speedX = 4
+        this.color = color
+
+        this.speedX = speed
 
         this.init()
     }
@@ -34,7 +26,7 @@ class Platform {
 
     draw() {
 
-        this.ctx.fillStyle = "red"
+        this.ctx.fillStyle = this.color
         this.ctx.fillRect(this.platPosition.x, this.platPosition.y, this.platSize.w, this.platSize.h)
         this.move()
 
@@ -46,3 +38,4 @@ class Platform {
 
     
 }
+
