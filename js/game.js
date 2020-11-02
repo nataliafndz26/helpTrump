@@ -18,6 +18,9 @@ const Game = {
     background: undefined,
     obstacles: [],
     platforms: [],
+    questions: undefined,
+    intervalFirst: undefined,
+    intervalSecond: undefined,
     keys: " ",
 
 
@@ -40,7 +43,7 @@ const Game = {
 
         this.reset()
 
-        this.interval = setInterval(() => {
+        this.intervalFirst = setInterval(() => {
 
             this.clear()
             this.drawAll()
@@ -60,7 +63,8 @@ const Game = {
             }
 
             if (this.collisionDetection()) {
-                console.log('ha chocado')
+                
+                this.stop()
             }
 
             this.platformDetection()
@@ -68,23 +72,44 @@ const Game = {
             this.generatePlat()
             this.clearPlat()
 
+            console.log (this.intervalFirst)
+
+
         }, 1000 / this.frames.fps)
     },
 
+    stop() {
+
+        clearInterval(this.intervalFirst)
+
+        this.intervalSecond = setInterval(() => {
+
+            this.questions.draw()
+            console.log (this.intervalSecond)
+            
+        }, 1000 / this.frames.fps);
+
+        setTimeout(() => {
+
+            clearInterval(this.intervalSecond)
+            
+        }, 10000)
+    },
+
     reset() {
-        this.background = new Background(this.ctx, this.canvasSize, 'img/bg.png')
+        this.background = new Background(this.ctx, this.canvasSize, 'img/City1.png')
         this.player = new Player(this.ctx, this.canvasSize, this.keys)
         this.obstacles = []
         this.platforms = []
+        this.questions = new Question (this.ctx, this.canvasSize)
 
     },
 
     drawAll() {
         this.background.draw()
-        this.player.drawTrump()
-        this.obstacles.forEach(elm => elm.drawObs())
+        this.player.drawTrump(this.frames.framesCounter)
+        this.obstacles.forEach(elm => elm.drawObs(this.frames.framesCounter))
         this.platforms.forEach(elm => elm.draw())
-
     },
 
     clear() {
@@ -93,7 +118,7 @@ const Game = {
 
     generateObs() {
 
-        if (this.frames.framesCounter % 90 === 0) {
+        if (this.frames.framesCounter % 200 === 0) {
 
             this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.player.defaultPosition, this.player.playerSize))
 
@@ -104,14 +129,14 @@ const Game = {
 
         if (this.frames.framesCounter % 450 === 0) {
             
-            const platform1 = new Platform(this.ctx, this.canvasSize, 200, 150, 12, "red", 1)
+            const platform1 = new Platform(this.ctx, this.canvasSize, 200, 150, 12, "red", 4)
 
             this.platforms.push (platform1)
             
         }
         if (this.frames.framesCounter % 425 === 0) {
 
-            const platform2 = new Platform(this.ctx, this.canvasSize, 330, 180, 15, "green", 1)
+            const platform2 = new Platform(this.ctx, this.canvasSize, 330, 180, 15, "green", 3)
             
             this.platforms.push (platform2)
 
@@ -119,12 +144,18 @@ const Game = {
 
         if (this.frames.framesCounter % 400 === 0) {
 
-           const platform3 = new Platform(this.ctx, this.canvasSize, 460, 120, 12, "yellow", 1)
+           const platform3 = new Platform(this.ctx, this.canvasSize, 460, 120, 12, "yellow", 2)
             
             this.platforms.push (platform3)
 
         }
     },
+
+    // generateQuestion() {
+
+    //     this.questions = new Question (this.ctx, this.canvasSize)
+        
+    // },
 
     collisionDetection() {
 
@@ -152,8 +183,7 @@ const Game = {
 
                 this.player.playerPosition.y = elm.platPosition.y - this.player.playerSize.h
                 this.player.controlYaxis.gravity = 0.2
-                //alert ('yay')
-                //}
+                
             }
         })
     },

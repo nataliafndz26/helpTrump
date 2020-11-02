@@ -9,8 +9,8 @@ class Player {
         }
 
         this.playerSize = {
-            w: 50,
-            h: 50
+            w: 100,
+            h: 100
         }
 
         this.playerPosition = {
@@ -37,17 +37,39 @@ class Player {
 
     init() {
         this.imageInstance = new Image()
-        this.imageInstance.src = 'img/trump.png';
+        this.imageInstance.src = 'img/trumpframes.png'
+        this.imageInstance.frames = 6
+        this.imageInstance.framesIndex = 0
         this.drawTrump()
 
     }
 
-    drawTrump() {
+    drawTrump(framesCounter) {
 
-        this.ctx.drawImage(this.imageInstance, this.playerPosition.x, this.playerPosition.y, this.playerSize.w, this.playerSize.h)
+        this.ctx.drawImage(
+            this.imageInstance,
+            this.imageInstance.framesIndex * Math.floor(this.imageInstance.width / this.imageInstance.frames),
+            0,
+            Math.floor(this.imageInstance.width / this.imageInstance.frames),
+            this.imageInstance.height,
+            this.playerPosition.x,
+            this.playerPosition.y,
+            this.playerSize.w,
+            this.playerSize.h)
+        
+        this.animate (framesCounter)
 
         this.moveTrump()
     }
+
+    animate(framesCounter) {
+        if (framesCounter % 5 == 0) {
+          this.imageInstance.framesIndex++;
+        }
+        if (this.imageInstance.framesIndex > this.imageInstance.frames - 1) {
+          this.imageInstance.framesIndex = 0;
+        }
+      }
 
     moveTrump() {
 

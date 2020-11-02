@@ -29,7 +29,6 @@ class Platform {
         this.ctx.fillStyle = this.color
         this.ctx.fillRect(this.platPosition.x, this.platPosition.y, this.platSize.w, this.platSize.h)
         this.move()
-
     }
 
     move() {
