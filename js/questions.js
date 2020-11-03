@@ -207,6 +207,9 @@ class Question {
             yellow: "#FFDA90"
         }
 
+        // this.selectedQuestion = undefined
+
+
         // this.keys = {
         //     a: keys.a,
         //     b: keys.b,
@@ -219,16 +222,13 @@ class Question {
     init() {
         //this.selectRandom() 
         //console.log(this.selectRandom())
-        this.draw()
+        //this.draw(selectedQuestion)
         
     }
 
-    draw() {
+    draw(selectedQuestion) {
 
-        let selectedQuestion = this.selectRandom()
-
-        console.log(selectedQuestion.ask)
-        
+    
         //BORDE NEGRO
 
         this.ctx.fillStyle = this.colors.black
@@ -283,8 +283,9 @@ class Question {
         this.ctx.fillStyle = this.colors.black
         this.ctx.fillText(selectedQuestion.answer.c, this.questionPosition.x + 40, this.questionPosition.y + 420, 625)
 
-
+        
     }
+
 
     selectRandom() {
  
@@ -293,7 +294,9 @@ class Question {
         randomQuestion = Math.floor(Math.random() * (this.text.length))
 
         return this.text[randomQuestion]
-    
     }
     
 }
+
+    
+

@@ -21,7 +21,10 @@ const Game = {
     questions: undefined,
     intervalFirst: undefined,
     intervalSecond: undefined,
+    selectedQuestion: undefined,
+    flag: true,
     keys: " ",
+
 
 
     init(id) {
@@ -45,13 +48,23 @@ const Game = {
 
         this.intervalFirst = setInterval(() => {
 
+
             this.clear()
             this.drawAll()
 
-            this.generateObs()
-            this.clearObs()
+            if (this.flag) {
 
+                this.generateObs()
+                this.clearObs()
+                
+            }
 
+            // while (this.flag === false) {
+
+            //     this.questions.draw(this.selectedQuestion)
+                
+            // }
+     
             if (this.frames.framesCounter > 5000) {
 
                 this.frames.framesCounter = 0
@@ -63,8 +76,25 @@ const Game = {
             }
 
             if (this.collisionDetection()) {
-                
+
+                this.selectedQuestion = this.questions.selectRandom()
+
                 this.stop()
+
+                //this.questions.draw(this.selectedQuestion)
+
+                this.obstacles = []
+             
+                this.flag = false
+
+                setTimeout(() => {
+
+                    clearInterval(this.intervalSecond)
+
+                    this.flag = true
+            
+                }, 10000)
+
             }
 
             this.platformDetection()
@@ -72,29 +102,38 @@ const Game = {
             this.generatePlat()
             this.clearPlat()
 
-            console.log (this.intervalFirst)
-
 
         }, 1000 / this.frames.fps)
     },
 
     stop() {
-
-        clearInterval(this.intervalFirst)
-
+        
         this.intervalSecond = setInterval(() => {
 
-            this.questions.draw()
-            console.log (this.intervalSecond)
-            
-        }, 1000 / this.frames.fps);
+            this.questions.draw (this.selectedQuestion)
 
-        setTimeout(() => {
 
-            clearInterval(this.intervalSecond)
-            
-        }, 10000)
+        }, 1000 / this.frames.fps)
     },
+
+ 
+    // stop() {
+
+        
+
+    //     // clearInterval(this.intervalFirst)
+
+    //     // this.intervalSecond = setInterval(() => {
+            
+    //     // }, 1000 / this.frames.fps);
+
+    //     // setTimeout(() => {
+
+    //     //     this.intervalSecond = clearInterval ()
+            
+    //     // }, 10000)
+    // },
+
 
     reset() {
         this.background = new Background(this.ctx, this.canvasSize, 'img/City1.png')
@@ -162,9 +201,9 @@ const Game = {
         return this.obstacles.some(elm => {
 
             return (this.player.playerPosition.x < elm.obsPosition.x + elm.obsSize.w &&
-                this.player.playerPosition.x + this.player.playerSize.w > elm.obsPosition.x &&
-                this.player.playerPosition.y < elm.obsPosition.y + elm.obsSize.h &&
-                this.player.playerSize.h + this.player.playerPosition.y > elm.obsPosition.y)
+            this.player.playerPosition.x + this.player.playerSize.w > elm.obsPosition.x &&
+            this.player.playerPosition.y < elm.obsPosition.y + elm.obsSize.h &&
+            this.player.playerSize.h + this.player.playerPosition.y > elm.obsPosition.y)
 
         })
     },
@@ -191,6 +230,7 @@ const Game = {
     clearObs() {
         this.obstacles = this.obstacles.filter(elm => elm.obsPosition.x >= 0)
     },
+
 
     clearPlat() {
         this.platforms = this.platforms.filter(elm => elm.platPosition.x >= 0)
