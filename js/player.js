@@ -88,7 +88,7 @@ class Player {
         document.addEventListener("keydown", e => {
 
 
-            if (e.key === this.keys) {
+            if (e.key === this.keys.space) {
 
                 //if (this.playerPosition.y >= this.defaultPosition) {
                     this.jumpTrump()

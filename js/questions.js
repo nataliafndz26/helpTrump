@@ -107,7 +107,8 @@ class Question {
                     b: "b) Abraham Lincoln",
                     c: "c) Thomas Jefferson"
                 },
-                correct: "a"
+                correct: "a",
+                status: true
             },
         
             {
@@ -117,7 +118,8 @@ class Question {
                     b: "b) 194",
                     c: "c) 178"
                 },
-                correct: "b"
+                correct: "b",
+                status: true
             },
         
             {
@@ -127,7 +129,8 @@ class Question {
                     b: "b) 1939",
                     c: "c) 1951"
                 },
-                correct: "c"
+                correct: "c",
+                status: true
             },
             {
                 ask: "Where are the African Union headquarters?",
@@ -136,7 +139,8 @@ class Question {
                     b: "b) Sudan",
                     c: "c) Argelia"
                 },
-                correct: "a"
+                correct: "a",
+                status: true
             },
             {
                 ask: "Which interpreting modality is used in the European Parliament?",
@@ -145,7 +149,8 @@ class Question {
                     b: "b) Liaison Interpreting",
                     c: "c) Simultaneous Interpreting"
                 },
-                correct: "c"
+                correct: "c",
+                status: true
             },
             {
                 ask: "Which of these options is NOT true?",
@@ -154,7 +159,8 @@ class Question {
                     b: "b) The UN Charter states that the use of force is not authorized to maintain international peace",
                     c: "c) State sovereignty is the fundamental pillar of International Law"
                 },
-                correct: "b"
+                correct: "b",
+                status: true
             },
             {
                 ask: "Who is Shinzo Abe?",
@@ -163,7 +169,8 @@ class Question {
                     b: "b) South Korea's President",
                     c: "c) Xiamen's governor"
                 },
-                correct: "a"
+                correct: "a",
+                status: true
             },
             {
                 ask: "How many countries are there in the United Kingdom?",
@@ -172,7 +179,8 @@ class Question {
                     b: "b) 4",
                     c: "c) 5"
                 },
-                correct: "b"
+                correct: "b",
+                status: true
             },
             {
                 ask: "Which is the capital of the state of Oregon?",
@@ -181,7 +189,8 @@ class Question {
                     b: "b) Eugene",
                     c: "c) Salem"
                 },
-                correct: "c"
+                correct: "c",
+                status: true
             },
             {
                 ask: "Which is the second name of Angela Merkel?",
@@ -190,7 +199,8 @@ class Question {
                     b: "b) Dorothea",
                     c: "c) Frederika"
                 },
-                correct: "b"
+                correct: "b",
+                status: true
             }
         
         ]
@@ -295,6 +305,7 @@ class Question {
 
         return this.text[randomQuestion]
     }
+
     
 }
 
