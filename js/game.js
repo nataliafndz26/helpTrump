@@ -19,10 +19,12 @@ const Game = {
     obstacles: [],
     platforms: [],
     lives: [],
+    whiteHouse: [],
     questions: undefined,
     intervalFirst: undefined,
-    intervalSecond: undefined,
-    selectedQuestion: undefined,
+    timeoutId: undefined,
+    selectedQuestion: [],
+    lastQuestion: undefined,
     flag: true,
     keys: {
         space: " "
@@ -30,7 +32,10 @@ const Game = {
         // b: "b",
         // c: "c"
     },
-    
+
+    //let lastQuestion = this.selectedQuestion[this.selectedQuestion.length - 1]
+    //let lastValue = selectedQuestion[selectedQuestion.length - 1]
+
 
 
 
@@ -57,23 +62,23 @@ const Game = {
 
         this.intervalFirst = setInterval(() => {
 
-            console.log(this.intervalFirst)
-            
             this.clear()
             this.drawAll()
+
+            //this.checkIfCorrect()
+            //console.log(this.checkIfCorrect())
+
 
             if (this.flag) {
 
                 this.generateObs()
                 this.clearObs()
 
+            } else {
+
+                this.questions.draw(this.lastQuestion)
+
             }
-
-            // while (this.flag === false) {
-
-            //     this.questions.draw(this.selectedQuestion)
-
-            // }
 
             if (this.frames.framesCounter > 5000) {
 
@@ -87,48 +92,30 @@ const Game = {
 
             if (this.collisionDetection()) {
 
-                this.selectedQuestion = this.questions.selectRandom()
-
-                this.stop()
+                //this.selectedQuestion = this.questions.selectRandom()
+                this.selectRandom()
+                console.log(this.lastQuestion)
 
                 this.obstacles = []
 
                 this.flag = false
 
+                this.timeoutTimer()
+                // this.checkIfCorrect()
+                // console.log(this.checkIfCorrect())
 
-                setTimeout(() => {
-
-                    clearInterval(this.intervalSecond)
-
-                    this.flag = true
-
-                    this.lives.pop ()
-
-                }, 10000)
-
-            } 
-            
+            }
 
             this.platformDetection()
 
             this.generatePlat()
             this.clearPlat()
 
-
         }, 1000 / this.frames.fps)
 
         this.checkIfCorrect()
+        // console.log(this.checkIfCorrect())
     },
-
-    stop() {
-
-        this.intervalSecond = setInterval(() => {
-
-            this.questions.draw(this.selectedQuestion)
-            
-          }, 1000 / this.frames.fps)
-    },
-
 
     reset() {
         this.background = new Background(this.ctx, this.canvasSize, 'img/City1.png')
@@ -136,7 +123,6 @@ const Game = {
         this.obstacles = []
         this.platforms = []
         this.questions = new Question(this.ctx, this.canvasSize)
-
     },
 
     drawAll() {
@@ -145,6 +131,20 @@ const Game = {
         this.obstacles.forEach(elm => elm.drawObs(this.frames.framesCounter))
         this.platforms.forEach(elm => elm.draw())
         this.lives.forEach(elm => elm.draw())
+        this.whiteHouse.forEach(elm => elm.draw())
+
+    },
+
+    timeoutTimer() {
+
+        this.timeoutId = setTimeout(() => {
+
+            this.lives.pop()
+
+            this.flag = true
+
+        }, 6000)
+
     },
 
     clear() {
@@ -156,6 +156,15 @@ const Game = {
         if (this.frames.framesCounter % 200 === 0) {
 
             this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.player.defaultPosition, this.player.playerSize))
+
+        }
+    },
+
+    generateWhiteHouse() {
+
+        if (this.frames.framesCounter % 4500 === 0) {
+
+            this.whiteHouse.push(new WhiteHouse(this.ctx, this.canvasSize))
 
         }
     },
@@ -186,12 +195,6 @@ const Game = {
         }
     },
 
-    // generateQuestion() {
-
-    //     this.questions = new Question (this.ctx, this.canvasSize)
-
-    // },
-
     collisionDetection() {
 
         return this.obstacles.some(elm => {
@@ -215,7 +218,6 @@ const Game = {
                 this.player.playerPosition.y + this.player.playerSize.h > elm.platPosition.y) {
 
 
-
                 this.player.playerPosition.y = elm.platPosition.y - this.player.playerSize.h
                 this.player.controlYaxis.gravity = 0.2
 
@@ -234,21 +236,36 @@ const Game = {
 
     checkIfCorrect() {
 
+        let checker = null
+
         document.addEventListener("keydown", e => {
 
+            console.log(e)
 
-            if (e.key === this.selectedQuestion.correct) {
+            if (e.key === this.lastQuestion.correct) {
+
+
                 console.log("correct")
 
-                clearInterval (this.intervalSecond)
+                //this.questions.correctAnswer()
 
-                return true
+                this.flag = true
+
+                //return true
+
+                //checker = true
 
 
-            } else if (e.key === this.keys.space) { 
+            } else if (e.key === this.keys.space) {
 
-                return true
 
+                //this.questions.incorrectAnswer()
+
+                this.flag = true
+
+                //return true
+
+                // checker = true
 
             } else {
 
@@ -256,29 +273,50 @@ const Game = {
 
                 this.lives.pop()
 
-                clearInterval(this.intervalSecond)
-                
+                this.flag = true
 
-                return false
+                //return false
 
+                //checker = false
             }
 
 
         })
 
+        // console.log(checker)
+        return checker
+
     },
 
     generateLives() {
-        
-        const life1 = new Life (this.ctx, this.canvasSize, 130)
 
-        const life2 = new Life (this.ctx, this.canvasSize, 180)
+        const life1 = new Life(this.ctx, this.canvasSize, 130)
+
+        const life2 = new Life(this.ctx, this.canvasSize, 180)
 
         const life3 = new Life(this.ctx, this.canvasSize, 230)
-        
+
         this.lives.push(life1, life2, life3)
 
-        console.log (this.lives)
-    }
+        //console.log (this.lives)
+    },
 
+    selectRandom() {
+
+        let indexRdnQuestion, rdnQuestion, randomPosition = 0
+
+        randomPosition = Math.floor(Math.random() * (this.questions.text.length))
+
+        rdnQuestion = this.questions.text[randomPosition]
+
+        indexRdnQuestion = this.questions.text.indexOf(rdnQuestion)
+
+        this.selectedQuestion.push(rdnQuestion)
+
+        this.questions.text.splice(indexRdnQuestion, 1)
+
+        this.lastQuestion = this.selectedQuestion[this.selectedQuestion.length - 1]
+
+        console.log(this.selectedQuestion, this.questions.text, this.lastQuestion)
+    }
 }

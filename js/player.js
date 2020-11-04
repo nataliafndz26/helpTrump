@@ -56,20 +56,20 @@ class Player {
             this.playerPosition.y,
             this.playerSize.w,
             this.playerSize.h)
-        
-        this.animate (framesCounter)
+
+        this.animate(framesCounter)
 
         this.moveTrump()
     }
 
     animate(framesCounter) {
         if (framesCounter % 5 == 0) {
-          this.imageInstance.framesIndex++;
+            this.imageInstance.framesIndex++;
         }
         if (this.imageInstance.framesIndex > this.imageInstance.frames - 1) {
-          this.imageInstance.framesIndex = 0;
+            this.imageInstance.framesIndex = 0;
         }
-      }
+    }
 
     moveTrump() {
 
@@ -91,11 +91,11 @@ class Player {
             if (e.key === this.keys.space) {
 
                 //if (this.playerPosition.y >= this.defaultPosition) {
-                    this.jumpTrump()
-                    
-                    console.log(this.playerPosition.y)
+                this.jumpTrump()
 
-               //}
+                console.log(this.playerPosition.y)
+
+                //}
 
             }
 
