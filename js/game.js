@@ -33,12 +33,6 @@ const Game = {
         // c: "c"
     },
 
-    //let lastQuestion = this.selectedQuestion[this.selectedQuestion.length - 1]
-    //let lastValue = selectedQuestion[selectedQuestion.length - 1]
-
-
-
-
     init(id) {
         this.canvasTag = document.getElementById(id)
         this.ctx = this.canvasTag.getContext('2d')
@@ -55,6 +49,8 @@ const Game = {
     },
 
     start() {
+
+        
 
         this.reset()
 
@@ -80,7 +76,7 @@ const Game = {
 
             }
 
-            if (this.frames.framesCounter > 5000) {
+            if (this.frames.framesCounter > 7000) {
 
                 this.frames.framesCounter = 0
 
@@ -107,9 +103,12 @@ const Game = {
             }
 
             this.platformDetection()
+            //this.player.checkYaxisOnPlatform(this.platforms)
 
             this.generatePlat()
             this.clearPlat()
+
+            this.generateWhiteHouse()
 
         }, 1000 / this.frames.fps)
 
@@ -219,7 +218,7 @@ const Game = {
 
 
                 this.player.playerPosition.y = elm.platPosition.y - this.player.playerSize.h
-                this.player.controlYaxis.gravity = 0.2
+                //this.player.controlYaxis.gravity = 0.2
 
             }
         })
@@ -236,7 +235,7 @@ const Game = {
 
     checkIfCorrect() {
 
-        let checker = null
+        let checker = false
 
         document.addEventListener("keydown", e => {
 
@@ -246,10 +245,10 @@ const Game = {
 
 
                 console.log("correct")
+                this.questions.correctAnswer()
+                
 
-                //this.questions.correctAnswer()
-
-                this.flag = true
+                //this.flag = true
 
                 //return true
 

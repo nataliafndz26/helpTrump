@@ -35,6 +35,6 @@ class Platform {
         this.platPosition.x -= this.speedX
     }
 
-    
+
 }
 

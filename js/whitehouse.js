@@ -42,6 +42,7 @@ class WhiteHouse {
     }
 
     move() {
+        
         this.obsPosition.x -= this.speedX
     }
 

@@ -210,7 +210,7 @@ class Question {
     correctAnswer() {
 
         this.ctx.fillStyle = this.colors.green
-        this.ctx.fillRect(this.questionPosition.x + 30, this.questionPosition.y + 153, 640, 25)
+        this.ctx.fillRect(this.questionPosition.x, this.questionPosition.y + 500, 640, 25)
 
     }
 

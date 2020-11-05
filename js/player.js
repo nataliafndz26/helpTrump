@@ -22,7 +22,8 @@ class Player {
 
         this.controlYaxis = {
             speed: 1,
-            gravity: 0.4
+            gravity: 0.4    
+
         }
 
 
@@ -85,15 +86,15 @@ class Player {
     }
 
     setEventListeners() {
+
         document.addEventListener("keydown", e => {
 
 
             if (e.key === this.keys.space) {
 
                 //if (this.playerPosition.y >= this.defaultPosition) {
-                this.jumpTrump()
 
-                console.log(this.playerPosition.y)
+                this.jumpTrump()
 
                 //}
 
@@ -101,6 +102,20 @@ class Player {
 
         })
     }
+
+    // checkYaxisOnPlatform(platforms) {
+
+    //     console.log(platforms)
+
+    //     return platforms.some(elm => {
+
+    //         return (this.playerPosition.x < elm.platPosition.x + elm.platSize.w &&
+    //             this.playerPosition.x + this.playerSize.w > elm.platPosition.x &&
+    //             this.playerPosition.y < elm.platPosition.y + elm.platSize.h &&
+    //             this.playerPosition.y + this.playerSize.h > elm.platPosition.y)
+
+    //     })
+    // }
 
     jumpTrump() {
         this.playerPosition.y -= 80;
