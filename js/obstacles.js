@@ -4,8 +4,8 @@ class Obstacle {
         this.ctx = ctx
 
         this.obsSize = {
-            w: 80,
-            h: 80
+            w: 90,
+            h: 90
         }
 
         this.obsPosition = {
@@ -14,13 +14,15 @@ class Obstacle {
         }
         this.speedX = 6
 
+        this.identifier = null
+
         this.imageInstance = undefined
 
         this.init()
     }
 
     init() {
-        
+
         this.imageInstance = new Image()
         this.imageInstance.src = 'img/obama.png'
         this.imageInstance.frames = 8
@@ -41,20 +43,20 @@ class Obstacle {
             this.obsPosition.y,
             this.obsSize.w,
             this.obsSize.h)
-        
-        this.animate (framesCounter)
+
+        this.animate(framesCounter)
 
         this.moveObs()
     }
 
     animate(framesCounter) {
         if (framesCounter % 10 == 0) {
-          this.imageInstance.framesIndex++;
+            this.imageInstance.framesIndex++;
         }
         if (this.imageInstance.framesIndex > this.imageInstance.frames - 1) {
-          this.imageInstance.framesIndex = 0;
+            this.imageInstance.framesIndex = 0;
         }
-      }
+    }
 
     moveObs() {
         this.obsPosition.x -= this.speedX

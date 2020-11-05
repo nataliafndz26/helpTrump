@@ -1,24 +1,30 @@
 body {
+    background-image: url("img/City1.png");
     margin:0;
     padding: 0;
-    background-image: url("img/City1.png");
-    background-position: 0 0;
     background-repeat: no-repeat;
     background-size: auto;
 }
 
-div.center {
+.center {
     text-align: center;
     margin-right: 50px;
+    display: block;
+}
+
+.win, .loose{
+
+    display: none;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center
+
 }
 
 #start-button {
     text-transform: uppercase;
-    font-family: sans-serif;
-}
-
-body button {
-    font-size: 100px;
+    font-family: monospace;
+    font-size: 50px;
     background-color:#FFDA90;
     color: red;
     padding: 20px 40px;
@@ -26,6 +32,34 @@ body button {
     box-shadow: 5px black;
     border-radius: 20px;
     margin-bottom: 20px;
+}
+
+
+h1{
+    font-size: 40px;
+    text-align: center;
+    font-family: sans-serif;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background-color:#FFDA90;
+    padding: 15px 35px;
+    width: 50%
+}
+
+
+p{
+    font-size: 25px;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 15px 35px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    background-color: #9BF087;
+    width: 50%
 }
 
 .instructions {
@@ -38,4 +72,58 @@ body button {
     box-shadow: 0;
     border-radius: 20px;
     margin-bottom: 20px;
+    text-align: center;
   }
+
+  #space {
+      background-color: #9BF087
+  }
+
+  #abc{
+      background-color:#9BFFF4;
+  }
+
+  .winpic{
+    width:400px;
+    height:300px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .loosepic{
+    width:400px;
+    height:300px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .first-container, .second-container{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .title{
+    margin-left: 30px ;
+    margin-top: 40px;
+  }
+  span{
+    text-transform: uppercase;
+    font-family: sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  .subtitle{
+    margin: 50px 20px;
+
+  }
+
+
+
+

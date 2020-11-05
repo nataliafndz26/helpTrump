@@ -42,7 +42,7 @@ class Question {
                 answer: {
                     a: "a) Etiopia",
                     b: "b) Sudan",
-                    c: "c) Argelia"
+                    c: "c) Algeria"
                 },
                 correct: "a",
                 status: true
@@ -124,18 +124,10 @@ class Question {
             red: "#F30F08"
         }
 
-        // this.selectedQuestion = undefined
-
-
-        // this.keys = {
-        //     a: keys.a,
-        //     b: keys.b,
-        //     c: keys.c
-        // }
+        this.correctImage = undefined
+        this.incorrectImage = undefined
 
         this.init()
-
-        console.log(this.text)
     }
 
     init() {
@@ -143,6 +135,12 @@ class Question {
         //console.log(this.selectRandom())
         //this.draw(selectedQuestion)
 
+        this.correctImage = new Image()
+        this.correctImage.src = 'img/correctTrump.png'
+        this.incorrectImage = new Image()
+        this.incorrectImage.src = 'img/incorrectTrump.png'
+        this.incorrectAnswer()
+        this.correctAnswer()
     }
 
     draw(lastQuestion) {
@@ -209,15 +207,25 @@ class Question {
 
     correctAnswer() {
 
-        this.ctx.fillStyle = this.colors.green
-        this.ctx.fillRect(this.questionPosition.x, this.questionPosition.y + 500, 640, 25)
+        this.ctx.drawImage(
+            this.correctImage,
+            this.questionPosition.x + 750,
+            this.questionPosition.y + 200,
+            200,
+            200
+        )
 
     }
 
     incorrectAnswer() {
 
-        this.ctx.fillStyle = this.colors.red
-        this.ctx.fillRect(this.questionPosition.x + 30, this.questionPosition.y + 153, 640, 25)
+        this.ctx.drawImage(
+            this.incorrectImage,
+            this.questionPosition.x + 750,
+            this.questionPosition.y + 200,
+            200,
+            200
+        )
 
     }
 

@@ -9,8 +9,8 @@ class Player {
         }
 
         this.playerSize = {
-            w: 100,
-            h: 100
+            w: 120,
+            h: 120
         }
 
         this.playerPosition = {
@@ -92,32 +92,19 @@ class Player {
 
             if (e.key === this.keys.space) {
 
-                //if (this.playerPosition.y >= this.defaultPosition) {
 
                 this.jumpTrump()
-
-                //}
 
             }
 
         })
     }
 
-    // checkYaxisOnPlatform(platforms) {
-
-    //     console.log(platforms)
-
-    //     return platforms.some(elm => {
-
-    //         return (this.playerPosition.x < elm.platPosition.x + elm.platSize.w &&
-    //             this.playerPosition.x + this.playerSize.w > elm.platPosition.x &&
-    //             this.playerPosition.y < elm.platPosition.y + elm.platSize.h &&
-    //             this.playerPosition.y + this.playerSize.h > elm.platPosition.y)
-
-    //     })
-    // }
 
     jumpTrump() {
+
+        document.getElementById('jump-sound').play()
+
         this.playerPosition.y -= 80;
         this.controlYaxis.speed -= 8
 

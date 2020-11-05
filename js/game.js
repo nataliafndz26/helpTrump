@@ -23,14 +23,13 @@ const Game = {
     questions: undefined,
     intervalFirst: undefined,
     timeoutId: undefined,
+    secondTimeoutId: undefined,
     selectedQuestion: [],
     lastQuestion: undefined,
     flag: true,
+    checker: null,
     keys: {
         space: " "
-        // a: "a",
-        // b: "b",
-        // c: "c"
     },
 
     init(id) {
@@ -50,22 +49,21 @@ const Game = {
 
     start() {
 
-        
+        document.getElementById('bg-sound').play()
 
         this.reset()
 
         this.generateLives()
 
+
         this.intervalFirst = setInterval(() => {
+
 
             this.clear()
             this.drawAll()
 
-            //this.checkIfCorrect()
-            //console.log(this.checkIfCorrect())
 
-
-            if (this.flag) {
+            if (this.flag && this.checker === null) {
 
                 this.generateObs()
                 this.clearObs()
@@ -88,32 +86,44 @@ const Game = {
 
             if (this.collisionDetection()) {
 
-                //this.selectedQuestion = this.questions.selectRandom()
                 this.selectRandom()
-                console.log(this.lastQuestion)
 
                 this.obstacles = []
 
                 this.flag = false
 
                 this.timeoutTimer()
-                // this.checkIfCorrect()
-                // console.log(this.checkIfCorrect())
+
+
+            }
+
+            if (this.checker) {
+
+                this.questions.correctAnswer()
+
+            } else if (this.checker === false) {
+
+                this.questions.incorrectAnswer()
 
             }
 
             this.platformDetection()
-            //this.player.checkYaxisOnPlatform(this.platforms)
 
             this.generatePlat()
             this.clearPlat()
 
             this.generateWhiteHouse()
+            this.whiteHouseDetection()
+
+            this.lives.length === 0 ? this.gameOver() : null
+
+            this.whiteHouseDetection() ? this.gameWin() : null
+
+
 
         }, 1000 / this.frames.fps)
 
         this.checkIfCorrect()
-        // console.log(this.checkIfCorrect())
     },
 
     reset() {
@@ -142,7 +152,7 @@ const Game = {
 
             this.flag = true
 
-        }, 6000)
+        }, 10000)
 
     },
 
@@ -152,7 +162,7 @@ const Game = {
 
     generateObs() {
 
-        if (this.frames.framesCounter % 200 === 0) {
+        if (this.frames.framesCounter % 150 === 0) {
 
             this.obstacles.push(new Obstacle(this.ctx, this.canvasSize, this.player.defaultPosition, this.player.playerSize))
 
@@ -206,6 +216,17 @@ const Game = {
         })
     },
 
+    whiteHouseDetection() {
+
+        return this.whiteHouse.some(elm => {
+            return (this.player.playerPosition.x < elm.obsPosition.x + elm.obsSize.w &&
+                this.player.playerPosition.x + this.player.playerSize.w > elm.obsPosition.x + 150 &&
+                this.player.playerPosition.y < elm.obsPosition.y + elm.obsSize.h &&
+                this.player.playerSize.h + this.player.playerPosition.y > elm.obsPosition.y)
+        })
+
+    },
+
     platformDetection() {
 
         this.platforms.forEach(elm => {
@@ -218,7 +239,6 @@ const Game = {
 
 
                 this.player.playerPosition.y = elm.platPosition.y - this.player.playerSize.h
-                //this.player.controlYaxis.gravity = 0.2
 
             }
         })
@@ -235,55 +255,50 @@ const Game = {
 
     checkIfCorrect() {
 
-        let checker = false
-
         document.addEventListener("keydown", e => {
-
-            console.log(e)
 
             if (e.key === this.lastQuestion.correct) {
 
 
                 console.log("correct")
-                this.questions.correctAnswer()
-                
 
-                //this.flag = true
+                document.getElementById('smart-sound').play()
+                this.flag = true
+                this.checker = true
+                console.log(this.checker)
 
-                //return true
-
-                //checker = true
+                clearTimeout(this.timeoutId)
 
 
             } else if (e.key === this.keys.space) {
 
-
-                //this.questions.incorrectAnswer()
-
                 this.flag = true
+                console.log(this.checker)
+                clearTimeout(this.timeoutId)
 
-                //return true
-
-                // checker = true
 
             } else {
 
                 console.log("incorrect")
 
+                document.getElementById('stupid-sound').play()
                 this.lives.pop()
 
                 this.flag = true
+                this.checker = false
+                console.log('yay')
+                clearTimeout(this.timeoutId)
 
-                //return false
-
-                //checker = false
             }
 
+            this.secondTimeoutId = setTimeout(() => {
+
+                this.checker = null
+
+            }, 2000)
 
         })
 
-        // console.log(checker)
-        return checker
 
     },
 
@@ -296,8 +311,6 @@ const Game = {
         const life3 = new Life(this.ctx, this.canvasSize, 230)
 
         this.lives.push(life1, life2, life3)
-
-        //console.log (this.lives)
     },
 
     selectRandom() {
@@ -316,6 +329,47 @@ const Game = {
 
         this.lastQuestion = this.selectedQuestion[this.selectedQuestion.length - 1]
 
-        console.log(this.selectedQuestion, this.questions.text, this.lastQuestion)
+    },
+
+    gameOver() {
+
+        document.getElementById('bg-sound').pause()
+        document.getElementById('loose-sound').play()
+
+        clearInterval(this.intervalFirst)
+
+        const looserScreen = document.querySelector('#loosediv')
+
+        looserScreen.style.display = 'block'
+
+        const canvas = document.querySelector('#myCanvas')
+
+        canvas.style.display = 'none'
+
+        const winnerScreen = document.querySelector('#windiv')
+
+        winnerScreen.style.display = 'none'
+
+    },
+
+    gameWin() {
+
+        document.getElementById('bg-sound').pause()
+        document.getElementById('win-sound').play()
+
+        clearInterval(this.intervalFirst)
+
+        const winnerScreen = document.querySelector('#windiv')
+
+        winnerScreen.style.display = 'block'
+
+        const canvas = document.querySelector('#myCanvas')
+
+        canvas.style.display = 'none'
+
+        const looserScreen = document.querySelector('#loosediv')
+
+        looserScreen.style.display = 'none'
     }
+
 }

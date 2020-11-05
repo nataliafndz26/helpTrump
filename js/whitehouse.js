@@ -9,11 +9,13 @@ class WhiteHouse {
         }
 
         this.obsPosition = {
-            x: canvasSize.w - 400,
+            x: canvasSize.w,
             y: canvasSize.h - this.obsSize.h + 60
         }
 
-        this.speedX = 1
+        this.identifier = 'whitehouse'
+
+        this.speedX = 2
 
         this.imageInstance = undefined
 
@@ -42,7 +44,7 @@ class WhiteHouse {
     }
 
     move() {
-        
+
         this.obsPosition.x -= this.speedX
     }
 
