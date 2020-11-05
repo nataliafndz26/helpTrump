@@ -208,10 +208,10 @@ const Game = {
 
         return this.obstacles.some(elm => {
 
-            return (this.player.playerPosition.x < elm.obsPosition.x + elm.obsSize.w &&
-                this.player.playerPosition.x + this.player.playerSize.w > elm.obsPosition.x &&
+            return (this.player.playerPosition.x < elm.obsPosition.x + elm.obsSize.w - 50 &&
+                this.player.playerPosition.x + this.player.playerSize.w - 50 > elm.obsPosition.x &&
                 this.player.playerPosition.y < elm.obsPosition.y + elm.obsSize.h &&
-                this.player.playerSize.h + this.player.playerPosition.y > elm.obsPosition.y)
+                this.player.playerSize.h - 10 + this.player.playerPosition.y > elm.obsPosition.y)
 
         })
     },
