@@ -250,7 +250,7 @@ const Game = {
 
 
     clearPlat() {
-        this.platforms = this.platforms.filter(elm => elm.platPosition.x >= 0)
+        this.platforms = this.platforms.filter(elm => elm.platPosition.x + elm.platSize.w >= 0)
     },
 
     checkIfCorrect() {
