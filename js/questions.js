@@ -131,10 +131,7 @@ class Question {
     }
 
     init() {
-        //this.selectRandom() 
-        //console.log(this.selectRandom())
-        //this.draw(selectedQuestion)
-
+ 
         this.correctImage = new Image()
         this.correctImage.src = 'img/correctTrump.png'
         this.incorrectImage = new Image()
@@ -144,9 +141,6 @@ class Question {
     }
 
     draw(lastQuestion) {
-
-        //let lastQuestion = selectedQuestion.length - 1
-        //let lastValue = selectedQuestion[lastQuestion]
 
 
         //BORDE NEGRO

@@ -260,12 +260,9 @@ const Game = {
             if (e.key === this.lastQuestion.correct) {
 
 
-                console.log("correct")
-
                 document.getElementById('smart-sound').play()
                 this.flag = true
                 this.checker = true
-                console.log(this.checker)
 
                 clearTimeout(this.timeoutId)
 
@@ -273,20 +270,16 @@ const Game = {
             } else if (e.key === this.keys.space) {
 
                 this.flag = true
-                console.log(this.checker)
                 clearTimeout(this.timeoutId)
 
 
             } else {
-
-                console.log("incorrect")
 
                 document.getElementById('stupid-sound').play()
                 this.lives.pop()
 
                 this.flag = true
                 this.checker = false
-                console.log('yay')
                 clearTimeout(this.timeoutId)
 
             }
